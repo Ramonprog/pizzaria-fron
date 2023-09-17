@@ -35,7 +35,7 @@ export default function SignUp() {
             <form className='max-w-lg w-full px-4 m-auto'>
 
                 <div className='mb-3'>
-                    <InputCustomComponent type='text' htmlfor='company' label='Empresa' placeholder='Nome da empresa' />
+                    <InputCustomComponent type='text' htmlfor='Empresa' label='company' placeholder='Nome da empresa' />
                 </div>
 
                 <div className='mb-3'>
