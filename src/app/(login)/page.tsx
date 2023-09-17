@@ -2,8 +2,11 @@ import Image from 'next/image'
 import Logo from '../../../public/logo.png'
 import { InputCustomComponent } from '@/components/ui/custom/InputCustomComponent'
 import { Button } from "@/components/ui/button"
+import ButtonLoginCustom from '@/components/ui/custom/ButtonLoginCustom'
+
 
 export default function Home() {
+
   return (
     <div className='w-full h-full flex flex-col items-center mt-10'>
 
@@ -18,8 +21,7 @@ export default function Home() {
           <InputCustomComponent type='password' htmlfor='password' label='Senha' placeholder='Digite sua senha' />
         </div>
       </div>
-
-      <Button className='mt-8'>Acessar</Button>
+      <ButtonLoginCustom children='Acessar' loading={false} />
     </div>
   )
 }
