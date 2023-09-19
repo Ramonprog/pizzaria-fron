@@ -1,3 +1,4 @@
+import { AuthProvider } from '@/contexts/AuthContext'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -10,13 +11,17 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className='bg-zinc-800 text-neutral-50'>{children}</body>
-    </html>
+    <html lang="pt-br">
+      <body className='bg-zinc-800 text-neutral-50'>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
+    </html >
   )
 }
