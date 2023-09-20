@@ -22,10 +22,7 @@ export default function Home() {
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault()
-    const data = {
-      email: '',
-      password: ''
-    }
+    const data = initialState
     try {
       setLoading(true)
       setTimeout(async () => {
@@ -49,11 +46,22 @@ export default function Home() {
       <form onSubmit={handleLogin} className='max-w-lg w-full px-4 m-auto'>
 
         <div className='mb-3'>
-          <InputCustomComponent type='text' htmlfor='email' label='E-mail' placeholder='Digite seu e-mail' />
+          <InputCustomComponent func={(e) => {
+            setInitialState({
+              ...initialState,
+              email: e.target.value
+            })
+          }} type='text' htmlfor='email' label='E-mail' placeholder='Digite seu e-mail' value={initialState.email} />
         </div>
 
         <div>
-          <InputCustomComponent type='password' htmlfor='password' label='Senha' placeholder='Digite sua senha' />
+          <InputCustomComponent func={(e) => {
+            setInitialState({
+              ...initialState,
+              password: e.target.value
+            })
+
+          }} type='password' htmlfor='password' label='Senha' placeholder='Digite sua senha' value={initialState.password} />
         </div>
 
         <div className='max-w-lg w-full  m-auto'>

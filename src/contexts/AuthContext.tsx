@@ -5,7 +5,6 @@ type AuthContextData = {
     user: UserProps
     isAuthenticated: boolean
     singIn: (data: SingInProps) => Promise<void>
-
 }
 
 type UserProps = {
@@ -36,8 +35,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     })
     const isAuthenticated = !!user
 
-    async function singIn() {
-        alert('Login')
+    async function singIn({ email, password }: SingInProps) {
+        console.log({ email, password })
     }
     return (
         <AuthContext.Provider value={{ user, isAuthenticated, singIn }}>
