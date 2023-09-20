@@ -1,4 +1,5 @@
 import { AuthProvider } from '@/contexts/AuthContext'
+import { Toaster } from "@/components/ui/toaster"
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className='bg-zinc-800 text-neutral-50'>
         <AuthProvider>
           {children}
+          <Toaster />
         </AuthProvider>
       </body>
     </html >

@@ -3,6 +3,7 @@ import { destroyCookie, setCookie } from "nookies";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "@/services/apiClient";
+import { toast } from "@/components/ui/use-toast";
 
 
 
@@ -11,6 +12,7 @@ type AuthContextData = {
     isAuthenticated: boolean
     singIn: (data: SingInProps) => Promise<void>
     signOut: () => void
+    signUp: (data: SignUpProps) => Promise<void>
 }
 
 type UserProps = {
@@ -26,6 +28,12 @@ type SingInProps = {
 
 type AuthProviderProps = {
     children: ReactNode
+}
+
+type SignUpProps = {
+    name: string
+    email: string
+    password: string
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -73,8 +81,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             console.log("🚀 ~ file: AuthContext.tsx:60 ~ singIn ~ error:", error.message)
         }
     }
+
+    async function signUp({ email, name, password }: SignUpProps) {
+        try {
+            await api.post('/user', {
+                name, email, password
+            })
+            window.location.href = '/'
+        } catch (error) {
+            toast({ description: 'Erro ao cadastrar' })
+        }
+    }
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, singIn, signOut }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, singIn, signOut, signUp }}>
             {children}
         </AuthContext.Provider>
     )

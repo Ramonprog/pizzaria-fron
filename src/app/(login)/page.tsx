@@ -7,9 +7,11 @@ import { Loader } from 'lucide-react'
 import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useAuthContext } from '@/contexts/AuthContext'
+import { toast } from '@/components/ui/use-toast'
 
 
 export default function Home() {
+
 
   const { singIn } = useAuthContext()
 
@@ -23,12 +25,15 @@ export default function Home() {
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault()
     const data = initialState
+    if (data.email === '' || data.password === '') return toast({
+      description: "Todos os campos devem ser preenchidos"
+    })
+
+    setLoading(true)
+
     try {
-      setLoading(true)
-      setTimeout(async () => {
-        setLoading(false)
-        await singIn(data)
-      }, 1000)
+      await singIn(data)
+      setLoading(false)
     } catch (error) {
       console.log("🚀 ~ file: page.tsx:28 ~ handleLogin ~ error:", error)
 
