@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { parseCookies } from "nookies";
 import { AuthTokenError } from "./errors/AuthTokenError";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 export function setupApiClient(ctx = undefined) {
   let cookies = parseCookies(ctx);
@@ -16,9 +17,9 @@ export function setupApiClient(ctx = undefined) {
     (response) => response,
     (error: AxiosError) => {
       if (error.response?.status === 401) {
-        // redirect to login
         if (typeof window !== undefined) {
-          window.location.href = "/login";
+          const { signOut } = useAuthContext();
+          signOut();
         } else {
           return Promise.reject(new AuthTokenError());
         }
