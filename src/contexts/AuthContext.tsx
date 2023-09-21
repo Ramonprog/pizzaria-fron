@@ -1,10 +1,9 @@
 'use client'
 import { destroyCookie, setCookie } from "nookies";
 import { createContext, ReactNode, useContext, useState } from "react";
-import { useRouter } from "next/router";
 import { api } from "@/services/apiClient";
 import { toast } from "@/components/ui/use-toast";
-
+import { useRouter } from 'next/navigation'
 
 
 type AuthContextData = {
@@ -50,6 +49,7 @@ export async function signOut() {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+    const router = useRouter()
     const [user, setUser] = useState<UserProps>({
         id: '',
         name: '',
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             api.defaults.headers['Authorizarin'] = `Bearer ${token}`
 
             //redirect para dashboard
-            window.location.href = 'dashboard'
+            router.push('/dashboard')
         } catch (error: any) {
             console.log("🚀 ~ file: AuthContext.tsx:60 ~ singIn ~ error:", error.message)
         }
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             await api.post('/user', {
                 name, email, password
             })
-            window.location.href = '/'
+            router.push('/')
         } catch (error) {
             toast({ description: 'Erro ao cadastrar' })
         }
