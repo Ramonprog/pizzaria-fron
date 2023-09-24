@@ -1,6 +1,6 @@
 'use client'
-import { destroyCookie, setCookie } from "nookies";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { api } from "@/services/apiClient";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from 'next/navigation'
@@ -92,6 +92,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             toast({ description: 'Erro ao cadastrar' })
         }
     }
+
+    const userData = async () => {
+        try {
+            const { '@nextauth.token': token } = parseCookies()
+
+            if (token) {
+                const res = await api.get('/me')
+                const { id, name, email } = res.data
+                setUser({ id, name, email })
+            }
+
+        } catch (error) {
+            console.log("🚀 ~ file: AuthContext.tsx:100 ~ userDat ~ error:", error)
+            signOut()
+        }
+    }
+
+    useEffect(() => {
+        userData()
+    }, [])
+
     return (
         <AuthContext.Provider value={{ user, isAuthenticated, singIn, signOut, signUp }}>
             {children}

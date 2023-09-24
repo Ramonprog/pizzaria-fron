@@ -4,16 +4,15 @@ import Logo from '../../../public/logo.png'
 import { InputCustomComponent } from '@/components/ui/custom/InputCustomComponent'
 import { Button } from "@/components/ui/button"
 import { Loader } from 'lucide-react'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { toast } from '@/components/ui/use-toast'
-
-
-
+import { parseCookies } from 'nookies'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
-
+  const router = useRouter()
 
   const { singIn } = useAuthContext()
 
@@ -38,11 +37,16 @@ export default function Home() {
       setLoading(false)
     } catch (error) {
       console.log("🚀 ~ file: page.tsx:28 ~ handleLogin ~ error:", error)
-
     }
-
-
   }
+
+  useEffect(() => {
+    const cookies = parseCookies()
+    const token = cookies['@nextauth.token']
+    if (token) {
+      router.push('/dashboard')
+    }
+  }, [])
 
   return (
     <div className='w-full h-full flex flex-col items-center mt-10'>
