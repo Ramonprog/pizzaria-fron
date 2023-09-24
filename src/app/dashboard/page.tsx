@@ -1,9 +1,7 @@
-import React from 'react'
+
 
 const Dashboard = () => {
-    return (
-        <div>Bem vindo ao painel</div>
-    )
+    return <div>Bem-vindo</div>
 }
 
 export default Dashboard

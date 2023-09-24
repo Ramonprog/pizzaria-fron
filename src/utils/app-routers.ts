@@ -1,10 +1,10 @@
 export const APP_ROUTES = {
   private: {
     dashboard: {
-      name: "Dashboard",
+      name: "dashboard",
     },
     unauthorized: {
-      name: "Unauthorized",
+      name: "unauthorized",
     },
   },
   public: {
