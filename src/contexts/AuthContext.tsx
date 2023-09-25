@@ -38,18 +38,19 @@ type SignUpProps = {
 const AuthContext = createContext({} as AuthContextData);
 export const useAuthContext = () => useContext(AuthContext)
 
-export async function signOut() {
-    const router = useRouter()
-    try {
-        destroyCookie(undefined, '@nextauth.token')
-        router.push('/')
-    } catch {
-        console.log('Erro ao deslogar')
-    }
-}
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const router = useRouter()
+
+    async function signOut() {
+        try {
+            destroyCookie(undefined, '@nextauth.token')
+            router.push('/')
+        } catch {
+            console.log('Erro ao deslogar')
+        }
+    }
+
     const [user, setUser] = useState<UserProps>({
         id: '',
         name: '',

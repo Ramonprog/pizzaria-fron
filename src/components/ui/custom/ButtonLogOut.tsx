@@ -1,23 +1,12 @@
 'use client'
 import { Button } from "../button"
 import { LogOut } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { destroyCookie } from "nookies"
+import { useAuthContext } from "@/contexts/AuthContext"
 
 const ButtonLogOut = () => {
-    const router = useRouter()
-    function signOut() {
-        const router = useRouter()
-        try {
-            destroyCookie(undefined, '@nextauth.token')
-            router.push('/')
-        } catch {
-            console.log('Erro ao deslogar')
-        }
-    }
-
+    const { signOut } = useAuthContext()
     return (
-        <Button onClick={() => signOut()} variant='ghost'>
+        <Button onClick={signOut} variant='ghost'>
             <LogOut />
         </Button>
     )
