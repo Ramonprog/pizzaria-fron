@@ -2,14 +2,28 @@
 import { Button } from '@/components/ui/button'
 import { InputCustomComponent } from '@/components/ui/custom/InputCustomComponent'
 import React, { FormEvent, useState } from 'react'
+import { api } from '@/services/apiClient'
+import { toast } from '@/components/ui/use-toast'
 
 const Category = () => {
-
     const [data, setData] = useState('')
 
     async function handleSubmit(event: FormEvent<HTMLElement>) {
         event.preventDefault()
-        alert(data)
+        if (data === '') return
+
+        try {
+            const res = await api.post('/category', {
+                name: data
+            })
+            console.log("res:", res.data)
+            toast({
+                description: 'Categoria cadastrada com sucesso!'
+            })
+            setData('')
+        } catch (error) {
+            console.log("🚀 ~ file: page.tsx:17 ~ handleSubmit ~ error:", error)
+        }
     }
 
     return (
