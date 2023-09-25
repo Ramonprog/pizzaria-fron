@@ -18,7 +18,7 @@ export default function DashboardLayout({
                 </Link>
                 <ul className="flex gap-4 items-center">
                     <li className="hover:text-red-600 ease-in-out duration-500">
-                        <Link href={'/category'}>
+                        <Link href={'/dashboard/category'}>
                             Categoria
                         </Link>
                     </li>
